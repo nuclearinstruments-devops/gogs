@@ -8,6 +8,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"io"
+	"mime"
 	"net"
 	"net/http"
 	"net/http/fcgi"
@@ -183,6 +184,12 @@ func runWeb(c *cli.Context) error {
 	m.Group("/branding", func() {
 		m.Get("/favicon", func(ctx *macaron.Context) {
 			if conf.Branding.FaviconPath != "" {
+				// Validate that the file is an image by checking the MIME type
+				mimeType := mime.TypeByExtension(filepath.Ext(conf.Branding.FaviconPath))
+				if !strings.HasPrefix(mimeType, "image/") {
+					ctx.Error(http.StatusForbidden, "Invalid file type")
+					return
+				}
 				http.ServeFile(ctx.Resp, ctx.Req.Request, conf.Branding.FaviconPath)
 				return
 			}
@@ -190,6 +197,12 @@ func runWeb(c *cli.Context) error {
 		})
 		m.Get("/app-icon", func(ctx *macaron.Context) {
 			if conf.Branding.AppIconPath != "" {
+				// Validate that the file is an image by checking the MIME type
+				mimeType := mime.TypeByExtension(filepath.Ext(conf.Branding.AppIconPath))
+				if !strings.HasPrefix(mimeType, "image/") {
+					ctx.Error(http.StatusForbidden, "Invalid file type")
+					return
+				}
 				http.ServeFile(ctx.Resp, ctx.Req.Request, conf.Branding.AppIconPath)
 				return
 			}
