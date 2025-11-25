@@ -179,6 +179,24 @@ func runWeb(c *cli.Context) error {
 
 	m.SetAutoHead(true)
 
+	// Branding routes for custom favicon and app icon
+	m.Group("/branding", func() {
+		m.Get("/favicon", func(ctx *macaron.Context) {
+			if conf.Branding.FaviconPath != "" {
+				http.ServeFile(ctx.Resp, ctx.Req.Request, conf.Branding.FaviconPath)
+				return
+			}
+			ctx.Error(http.StatusNotFound)
+		})
+		m.Get("/app-icon", func(ctx *macaron.Context) {
+			if conf.Branding.AppIconPath != "" {
+				http.ServeFile(ctx.Resp, ctx.Req.Request, conf.Branding.AppIconPath)
+				return
+			}
+			ctx.Error(http.StatusNotFound)
+		})
+	})
+
 	m.Group("", func() {
 		m.Get("/", ignSignIn, route.Home)
 		m.Group("/explore", func() {

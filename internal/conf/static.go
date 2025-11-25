@@ -410,6 +410,14 @@ type PictureOpts struct {
 // Picture settings
 var Picture PictureOpts
 
+type BrandingOpts struct {
+	FaviconPath string
+	AppIconPath string
+}
+
+// Branding settings
+var Branding BrandingOpts
+
 type i18nConf struct {
 	Langs     []string          `delim:","`
 	Names     []string          `delim:","`

@@ -10,7 +10,7 @@
 					{{if .PageIsSettingsHooksNew}}{{.i18n.Tr "repo.settings.add_webhook"}}{{else}}{{.i18n.Tr "repo.settings.update_webhook"}}{{end}}
 					<div class="ui right">
 						{{if eq .HookType "gogs"}}
-							<img class="img-13" src="{{AppSubURL}}/img/favicon.png">
+							<img class="img-13" src="{{AppIconURL}}">
 						{{else}}
 							<img class="img-13" src="{{AppSubURL}}/img/{{.HookType}}.png">
 						{{end}}

@@ -31,11 +31,11 @@
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{AppName}}">
 		<meta property="og:description" content="Gogs is a painless self-hosted Git service.">
-		<meta property="og:image" content="{{AppURL}}img/favicon.png" />
+		<meta property="og:image" content="{{AppURL}}{{FaviconRelURL}}" />
 		<meta property="og:site_name" content="Gogs">
 	{{end}}
 
-	<link rel="shortcut icon" href="{{AppSubURL}}/img/favicon.png" />
+	<link rel="shortcut icon" href="{{FaviconURL}}" />
 
 	<script src="{{AppSubURL}}/js/jquery-3.6.0.min.js"></script>
 	<script src="{{AppSubURL}}/js/libs/jquery.are-you-sure.js"></script>
@@ -89,7 +89,7 @@
 						<div class="column">
 							<div class="ui top secondary menu">
 								<a class="item brand" href="{{AppSubURL}}/">
-									<img class="ui mini image" src="{{AppSubURL}}/img/favicon.png">
+									<img class="ui mini image" src="{{AppIconURL}}">
 								</a>
 
 								{{if .IsLogged}}

@@ -118,6 +118,25 @@ func FuncMap() []template.FuncMap {
 			"ThemeColorMetaTag": func() string {
 				return conf.UI.ThemeColorMetaTag
 			},
+			"FaviconURL": func() string {
+				if conf.Branding.FaviconPath != "" {
+					return conf.Server.Subpath + "/branding/favicon"
+				}
+				return conf.Server.Subpath + "/img/favicon.png"
+			},
+			"FaviconRelURL": func() string {
+				// Returns the favicon URL without leading slash for use in meta tags
+				if conf.Branding.FaviconPath != "" {
+					return strings.TrimPrefix(conf.Server.Subpath+"/branding/favicon", "/")
+				}
+				return strings.TrimPrefix(conf.Server.Subpath+"/img/favicon.png", "/")
+			},
+			"AppIconURL": func() string {
+				if conf.Branding.AppIconPath != "" {
+					return conf.Server.Subpath + "/branding/app-icon"
+				}
+				return conf.Server.Subpath + "/img/favicon.png"
+			},
 			"FilenameIsImage": func(filename string) bool {
 				mimeType := mime.TypeByExtension(filepath.Ext(filename))
 				return strings.HasPrefix(mimeType, "image/")

@@ -330,6 +330,20 @@ func Init(customConf string) error {
 		Mirror.DefaultInterval = 8
 	}
 
+	// *****************************
+	// ----- Branding settings -----
+	// *****************************
+
+	if err = File.Section("branding").MapTo(&Branding); err != nil {
+		return errors.Wrap(err, "mapping [branding] section")
+	}
+	if Branding.FaviconPath != "" {
+		Branding.FaviconPath = ensureAbs(Branding.FaviconPath)
+	}
+	if Branding.AppIconPath != "" {
+		Branding.AppIconPath = ensureAbs(Branding.AppIconPath)
+	}
+
 	// *************************
 	// ----- I18n settings -----
 	// *************************
