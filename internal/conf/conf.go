@@ -330,6 +330,28 @@ func Init(customConf string) error {
 		Mirror.DefaultInterval = 8
 	}
 
+	// *****************************
+	// ----- Branding settings -----
+	// *****************************
+
+	if err = File.Section("branding").MapTo(&Branding); err != nil {
+		return errors.Wrap(err, "mapping [branding] section")
+	}
+	if Branding.FaviconPath != "" {
+		Branding.FaviconPath = ensureAbs(Branding.FaviconPath)
+		if !osutil.IsFile(Branding.FaviconPath) {
+			log.Warn("Custom favicon file %q not found, using default", Branding.FaviconPath)
+			Branding.FaviconPath = ""
+		}
+	}
+	if Branding.AppIconPath != "" {
+		Branding.AppIconPath = ensureAbs(Branding.AppIconPath)
+		if !osutil.IsFile(Branding.AppIconPath) {
+			log.Warn("Custom app icon file %q not found, using default", Branding.AppIconPath)
+			Branding.AppIconPath = ""
+		}
+	}
+
 	// *************************
 	// ----- I18n settings -----
 	// *************************
